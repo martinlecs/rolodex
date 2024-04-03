@@ -4,8 +4,9 @@ import csv
 import fnmatch
 import json
 import sys
-from pprint import pprint
 from typing import Literal, TypedDict
+
+from tabulate import tabulate
 
 
 class Record(TypedDict):
@@ -21,31 +22,31 @@ class Rolodex:
     def add_records(self, records: list[Record]) -> None:
         self.records.extend(records)
 
-    # https://docs.python.org/3/library/fnmatch.html
     def filter_records(self, field: Literal["name", "address", "phone_number"], pattern: str) -> list[Record]:
+        """Filter records using Unix shell-style wildcards on a specfic field.
+
+        Syntax details: https://docs.python.org/3/library/fnmatch.html
+        """
         return [r for r in self.records if fnmatch.filter([r[field]], pattern)]
 
-    def display(self):
-        pprint(self.records)
+    def display_as_json(self) -> None:
+        sys.stdout.write(json.dumps(self.records, indent=4))
 
-    def display_as_table(self):
-        pass
+    def display_as_table(self) -> None:
+        sys.stdout.write(tabulate(self.records, headers="keys"))
 
     def export_to_json(self, export_path: str) -> None:
-        if export_path == "":
-            # if no path is provided, just print json as is to screen
-            sys.stdout.write(json.dumps(self.records))
-
         with open(export_path, "w", encoding="utf-8") as f:
             json.dump(self.records, f, ensure_ascii=False, indent=4)
 
     def export_to_csv(self, export_path: str) -> None:
-        if export_path == "":
-            # if no path is provided, just print csv as is to screen
-            sys.stdout.write(json.dumps(self.records))
-
-        # https://docs.python.org/3/library/csv.html#csv.DictWriter
         with open(export_path, "w", encoding="utf-8", newline="") as csvfile:
-            writer = csv.writer(csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
-            writer.writerow(["name", "address", "phoneumber"])
+            writer = csv.DictWriter(
+                csvfile,
+                delimiter=",",
+                quotechar="|",
+                quoting=csv.QUOTE_MINIMAL,
+                fieldnames=["name", "address", "phone_number"],
+            )
+            writer.writeheader()
             writer.writerows(self.records)
