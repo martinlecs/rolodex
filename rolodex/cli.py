@@ -36,6 +36,10 @@ def cli(
 
     for fi in filters:
         field, glob_pattern = fi.split(",")
+
+        if field not in ["name", "address", "phone_number"]:
+            raise click.UsageError("Field must be one of [name, address, phone_number]")
+
         # Since we won't be implementing input validation in this MMVP to get the correct types for "field",
         # we will choose to ignore the type error that is raised by the linter
         rolo = rolo.filter_records(field, glob_pattern)  # type: ignore[arg-type]
