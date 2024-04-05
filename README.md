@@ -13,7 +13,7 @@ Further improvements include:
 
 This tool is very easy to break if you go outside the happy path! Use at your own peril!
 
-### Setting up dev environment
+## Setting up
 
 This project was built for python3.9 but should work just fine with later versions of python3.
 
