@@ -13,13 +13,13 @@ def test_cli_works():
             "tests/integration/data/test2.json",
             # apply filter
             "-f",
-            "name,*3",
+            "name=*3",
             # add record
             "-a",
             "'mart3,asdadada asdasd asdsadsa asd,12321321'",
             # apply another filter
             "-f",
-            "address,*ay*",
+            "address=*ay*",
             # print results to screen as nicely formatted json
             "-d",
             "json",

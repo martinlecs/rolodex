@@ -38,13 +38,13 @@ Since this project was built using [Poetry](https://python-poetry.org/), I would
 Load a file, filter for names that match the glob pattern `*3` and then export the result to json:
 
 ```sh
-python3 -m rolodex.cli tests/integration/data/test1.csv -f "name,*3" -o output.json
+python3 -m rolodex.cli tests/integration/data/test1.csv -f "name=*3" -o output.json
 ```
 
 Load multiple files, apply multiple filters, add a record, create an output, and then display the results to the screen as a table:
 
 ```sh
-python3 -m rolodex.cli tests/integration/data/test1.csv tests/integration/data/test2.json -a "Martin,this is my address,111000111" -f "name,Martin*" -f "address,*Sydney*" -o output.csv -d table
+python3 -m rolodex.cli tests/integration/data/test1.csv tests/integration/data/test2.json -a "Martin,this is my address,111000111" -f "name=Martin*" -f "address=*Sydney*" -o output.csv -d table
 ```
 
 _For more information, please refer to the [Documentation](./DOCUMENTATION.md)_

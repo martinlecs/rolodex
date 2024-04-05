@@ -35,7 +35,7 @@ def cli(
     rolo.add_records_from_string(records)
 
     for fi in filters:
-        field, glob_pattern = fi.split(",")
+        field, glob_pattern = fi.split("=")
 
         if field not in ["name", "address", "phone_number"]:
             raise click.UsageError("Field must be one of [name, address, phone_number]")
@@ -45,6 +45,9 @@ def cli(
         rolo = rolo.filter_records(field, glob_pattern)  # type: ignore[arg-type]
 
     if output_file_path:
+        if output_file_path.suffix not in [".json", ".csv"]:
+            raise click.UsageError(f"Unsupported output format specified: {output_file_path}")
+
         rolo.export_to_file(output_file_path)
 
     if display_format == "json":
