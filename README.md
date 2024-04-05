@@ -10,6 +10,7 @@ Further improvements include:
 - More robust error handling
 - Toggleable debug logging
 - Better documentation accessible within the CLI prompt
+- Automated CI and tag creation for distribution
 
 This tool is very easy to break if you go outside the happy path! Use at your own peril!
 
